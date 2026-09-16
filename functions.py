@@ -10,6 +10,21 @@ def prod_non_zero_diag(x):
     Not vectorized implementation.
     """
 
+    product = 1
+    non_zero = False
+
+    size = min(len(x),len(x[0]))
+
+    for i in range(size):
+        if x[i][i] != 0:
+            non_zero = True
+            product = product * x[i][i]
+
+    if non_zero:
+        return int(product)
+    else:
+        return 0
+
     pass
 
 
@@ -23,6 +38,8 @@ def are_multisets_equal(x, y):
 
     Not vectorized implementation.
     """
+
+    return sorted(list(x)) == sorted(list(y))
 
     pass
 

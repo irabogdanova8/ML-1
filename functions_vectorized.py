@@ -13,6 +13,15 @@ def prod_non_zero_diag(x):
     Vectorized implementation.
     """
 
+    diag = np.diag(x)
+
+    nonzero_diag = diag[diag != 0] # filter out zero elements
+
+    if nonzero_diag.size > 0:
+        return int(np.prod(nonzero_diag))
+    else:
+        return 0
+    
     pass
 
 
@@ -26,6 +35,8 @@ def are_multisets_equal(x, y):
 
     Vectorized implementation.
     """
+
+    return np.array_equal(np.sort(x), np.sort(y))
 
     pass
 
