@@ -54,6 +54,12 @@ def max_after_zero(x):
 
     Not vectorized implementation.
     """
+    largest = None
+    for i in range(1, len(x)):
+        if x[i - 1] == 0:
+            if largest is None or x[i] > largest:
+                largest = x[i]
+    return largest
 
     pass
 
@@ -69,6 +75,16 @@ def convert_image(img, coefs):
 
     Not vectorized implementation.
     """
+    h = len(img)
+    w = len(img[0])
+    result = [[0.0] * w for _ in range(h)]
+    for i in range(h):
+        for j in range(w):
+            s = 0.0
+            for c in range(len(coefs)):
+                s += img[i][j][c] * coefs[c]
+            result[i][j] = s
+    return result
 
     pass
 
@@ -83,6 +99,15 @@ def run_length_encoding(x):
 
     Not vectorized implementation.
     """
+    elements = []
+    counters = []
+    for value in x:
+        if elements and elements[-1] == value:
+            counters[-1] += 1
+        else:
+            elements.append(int(value))
+            counters.append(1)
+    return elements, counters
 
     pass
 
@@ -97,5 +122,16 @@ def pairwise_distance(x, y):
 
     Not vectorized implementation.
     """
+    result = []
+    for x_i in x:
+        row = []
+        for y_j in y:
+            s = 0.0
+            for k in range(len(x_i)):
+                d = x_i[k] - y_j[k]
+                s += d * d
+            row.append(s ** 0.5)
+        result.append(row)
+    return result
 
     pass

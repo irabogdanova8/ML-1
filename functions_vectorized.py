@@ -15,13 +15,8 @@ def prod_non_zero_diag(x):
 
     diag = np.diag(x)
 
-    nonzero_diag = diag[diag != 0] # filter out zero elements
+    return diag[diag != 0].prod()
 
-    if nonzero_diag.size > 0:
-        return int(np.prod(nonzero_diag))
-    else:
-        return 0
-    
     pass
 
 
@@ -52,6 +47,8 @@ def max_after_zero(x):
     Vectorized implementation.
     """
 
+    return x[1:][x[:-1] == 0].max()
+
     pass
 
 
@@ -67,6 +64,8 @@ def convert_image(img, coefs):
     Vectorized implementation.
     """
 
+    return img @ coefs
+
     pass
 
 
@@ -81,6 +80,12 @@ def run_length_encoding(x):
     Vectorized implementation.
     """
 
+    change = np.concatenate(([True], x[1:] != x[:-1]))
+    elements = x[change]
+    idx = np.where(change)[0]
+    counts = np.diff(np.concatenate((idx, [len(x)])))
+    return elements, counts
+
     pass
 
 
@@ -94,5 +99,9 @@ def pairwise_distance(x, y):
 
     Vctorized implementation.
     """
+
+    x_sq = (x ** 2).sum(axis=1)
+    y_sq = (y ** 2).sum(axis=1)
+    return np.sqrt(x_sq[:, None] + y_sq[None, :] - 2 * x @ y.T)
 
     pass
